@@ -9,7 +9,7 @@ require "alfred"
 require 'plist'
 require 'yaml'
 require 'mixlib/shellout'
-
+require 'iStats'
 
 class Glance
   SMC_KEYS = {
@@ -54,37 +54,36 @@ class Glance
   def collect_temperature
     return if @actor
 
-    command = %Q{./bin/smc -k #{SMC_KEYS.keys.join(',')} -r -c}
+    # temp = IStats::Cpu.delegate("all")
 
-    profiler = eval("{#{Glance.sh(command).stdout}}")
+#     > IStats.get_info[:cpu_temperature]
+# => {:battery_health_stats=>{:battery_health=>"Good", :max_design_cycle_count=>1000, :cycle_count=>"156", :cycle_count_percentage=>15.6, :thresholds=>[450.0, 650.0, 850.0, 950.0], :battery_temp=>31.796875}, :battery_charge_stats=>{:cur_charge=>"3630", :cur_charge_percentage=>64, :original_max_capacity=>6559.0, :current_max_capacity=>5932.0}, :cpu_temperature=>43.5, :cpu_thresholds=>[50, 68, 80, 90], :fan_numbers_and_speeds=>[[1, 0]]}
 
-    cpu_temperature = profiler[:TC0P]
-    gpu_temperature = profiler[:TG0P]
-
+    cpu_temperature = IStats.get_info[:cpu_temperature]
     icon = {:type => "default", :name => "icon/temperature/GPU.png"}
     @feedback.add_item(
-      :subtitle => "CPU: #{cpu_temperature}° C / GPU: #{gpu_temperature}° C" ,
-      :title    => "CPU/GPU Temperature"                                     ,
-      :uid      => "CPU/GPU Temperature"                                     ,
+      :subtitle => "CPU: #{cpu_temperature}° C" ,
+      :title    => "CPU Temperature"                                     ,
+      :uid      => "CPU Temperature"                                     ,
       :icon     => icon)
 
+    # gpu_temperature = 200
+    # icon = {:type => "default", :name => "icon/temperature/GPU.png"}
+    # @feedback.add_item(
+    #   :subtitle => "GPU: #{gpu_temperature}° C" ,
+    #   :title    => "GPU Temperature"                                     ,
+    #   :uid      => "GPU Temperature"                                     ,
+    #   :icon     => icon)
 
-    right_fan_speed = profiler[:F1Ac]
-    left_fan_speed  = profiler[:F0Ac]
-    add_fan_speed_item(left_fan_speed, right_fan_speed)
+    # [number, speed]
+    IStats.get_info[:fan_numbers_and_speeds].each{|info_arr|
+      add_fan_speed_item(info_arr)
+    }
   end
 
-  def add_fan_speed_item(left, right)
-    if left and right
-      fan_speed = (left + right) / 2
-    elsif left.nil?
-      fan_speed = right
-    elsif right.nil?
-      fan_speed = left
-    else
-      return
-    end
-
+  def add_fan_speed_item(info_arr)
+    fan_number = info_arr[0]
+    fan_speed = info_arr[1]
     if fan_speed < 3500
       icon = {:type => "default", :name => "icon/fan/green.png"}
       title = "Fan Speed: Normal"
@@ -96,9 +95,9 @@ class Glance
       title = "Fan Speed: Driving Crazy!"
     end
     @feedback.add_item(
-      :subtitle => "Left #{left} ↔ Right #{right} RPM" ,
-      :uid      => 'Fan Speed'                                             ,
-      :title    => title                                                   ,
+      :subtitle => "Fan #{fan_number}: #{fan_speed} RPM" ,
+      :uid      => "Fan #{fan_number} Speed",
+      :title    => title,
       :icon     => icon)
 
   end
@@ -282,6 +281,7 @@ class Glance
           :icon => {:type => "default", :name => "icon/battery/age.png"}
         )
       else
+        airpods_battery()
         @feedback.add_item(battery_item)
       end
     end
@@ -289,6 +289,34 @@ class Glance
   end
 
   private
+
+  def airpods_battery
+    battery_info_raw = %x{bash ./bin/AirPodsPower.sh}
+    return if battery_info_raw.include?("Not Connected")
+
+    icon = {:type => "default", :name => "icon/battery/airpods-3.png"}
+        battery_info = battery_info_raw
+          .strip
+          .gsub(" ", "")
+          .split("%")
+          .select{|el|
+            el.split(":")[1] != "0"
+          }
+          .map{|el| el+"%"}.join(", ")
+          .gsub("L:", "Left :")
+          .gsub("R:", "Right :")
+          .gsub("C:", "Case :")
+
+        airpods_battery_item = {
+          :title        => "Airpods"            ,
+          :subtitle     => "#{battery_info}" ,
+          :uid          => "Airpods"                      ,
+          :valid        => 'no'                                      ,
+          :autocomplete => 'Airpods ⟩ '                              ,
+          :icon         => icon                                      ,
+        }
+        @feedback.add_item(airpods_battery_item)
+  end
 
   def percentage_sign(percent, use_sign = :emoji)
     if use_sign.eql? :emoji
@@ -324,4 +352,3 @@ if __FILE__ == $PROGRAM_NAME
     generate_feedback(alfred, ARGV)
   end
 end
-
