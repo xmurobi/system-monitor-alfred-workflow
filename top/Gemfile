@@ -3,3 +3,4 @@ source "https://rubygems.org"
 gem "plist"
 gem "alfred-workflow"
 gem 'mixlib-shellout'
+gem 'iStats', :git => 'https://github.com/singhprd/iStats'
