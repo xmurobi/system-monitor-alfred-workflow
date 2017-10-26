@@ -4,12 +4,12 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes_2.png)
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="300">
 
 
-- 2) (*work in progress*) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
+- 2) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance_2.png) 
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="300">
 
 ## Usage
 
@@ -17,7 +17,7 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help_2.png) 
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help.png" height="300">
 
 ### 1. Top Processes
 
@@ -35,7 +35,6 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
    Top IO requires [DTrace][Dtrace] and it would take a while to finish. The new **callback** design is to run the job in he background and post a notification (OSX 10.8+) using notification center. Click on the notification to show the result in alfred.
 
 ![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/callback.png) 
-
 
 
 
@@ -65,12 +64,11 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 1.) Type process name to filter
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered_by_query_2.png)
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" height="300">
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep_2.png) 
-
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="300">
 
 ### 2. Glance an Eye on your system
 
@@ -78,8 +76,7 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 1. `glance`: Show system information including internal battery, bluetooth battery, disk capacity, etc.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/battery.png)
-
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" width="100" height="100">
 #### B. Change Display Order
 
 1. Activate `Alfred Preferences` → `Advanced` → `Top Result Keyword Latching`
