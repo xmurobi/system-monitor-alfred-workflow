@@ -1,6 +1,6 @@
 # Alfred 2 Top Process Workflow
 
-[Download](https://github.com/singhprd/alfred2-top-workflow/releases/latest/download/v2.3/Top.Processes.alfredworkflow) 
+[Download](https://github.com/singhprd/alfred2-top-workflow/releases/download/v2.3/Top.Processes.alfredworkflow) 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
