@@ -4,12 +4,15 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="300">
-
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="400">
+</p>
 
 - 2) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="300">
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="400">
+</p>
 
 ## Usage
 
@@ -17,7 +20,9 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help.png" height="300">
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help.png" height="400">
+</p>
 
 ### 1. Top Processes
 
@@ -64,11 +69,16 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 1.) Type process name to filter
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" width="400">
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" width="400">
+</p>
+
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep.png" height="300">
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep.png" height="400">
+</p>
 
 ### 2. Glance an Eye on your system
 
@@ -76,7 +86,10 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 1. `glance`: Show system information including internal battery, bluetooth battery, disk capacity, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" height="300">
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" height="400">
+</p>
+
 #### B. Change Display Order
 
 1. Activate `Alfred Preferences` → `Advanced` → `Top Result Keyword Latching`
