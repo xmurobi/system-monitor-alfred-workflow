@@ -97,4 +97,6 @@ Two ways are provided:
 This method create a symlink to the alfred workflow directory: "~/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows". This method is suitable for **developers**.
 
 
+---
+
 ### Forked from Zhao Cai at https://github.com/zhaocai/alfred2-top-workflow
