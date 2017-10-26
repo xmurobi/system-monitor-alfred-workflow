@@ -4,7 +4,7 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
-![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes_2.png | width=100)
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes_2.png ){:height="50%" width="50%"}
 
 
 - 2) (*work in progress*) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
