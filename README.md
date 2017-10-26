@@ -5,7 +5,7 @@
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
 <p align="center">
-   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="400">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="500">
 </p>
 
 - 2) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
