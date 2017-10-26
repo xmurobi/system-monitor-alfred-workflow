@@ -4,12 +4,12 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/mixed%20top%20processes.png) 
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes_2.png) 
 
 
-- 2) (*working in progress*) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
+- 2) (*work in progress*) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/glance.png) 
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance_2.png) 
 
 ## Usage
 
@@ -17,7 +17,7 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/help.png) 
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help_2.png) 
 
 ### 1. Top Processes
 
@@ -65,11 +65,11 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 1.) Type process name to filter
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/filtered%20by%20query.png)
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered_by_query_2.png)
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/top%20sleep.png) 
+![](https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep_2.png) 
 
 
 ### 2. Glance an Eye on your system
