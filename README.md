@@ -1,15 +1,25 @@
-# Alfred 2 Top Process Workflow
+# System Monitor : An Alfred 3 Workflow.
 
-The initial motive of this workflow is to avoid frequent visits to the Activity Monitor when the fan goes loud. Now it has been evolved with two major features:
+### Take a glance at system performance. List/Kill Top Processes by Memory, Cpu or IO Usage.
+
+###### Forked from Zhao Cai as Alfred 2 Top Workflow at https://github.com/zhaocai/alfred2-top-workflow
+
+
+
+
+### [💾 Download](https://github.com/singhprd/alfred2-top-workflow/releases/download/v2.3/Top.Processes.alfredworkflow) 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/mixed%20top%20processes.png) 
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/mixed%20top%20processes.png" height="500">
+</p>
 
+- 2) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
 
-- 2) (*working in progress*) Get a glance of system status including internal battery, fan speed, CPU/GPU Temperature, bluetooth battery, disk capacity, etc.
-
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/glance.png) 
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="400">
+</p>
 
 ## Usage
 
@@ -17,7 +27,9 @@ The initial motive of this workflow is to avoid frequent visits to the Activity 
 
 Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/help.png) 
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/help.png" height="400">
+</p>
 
 ### 1. Top Processes
 
@@ -35,7 +47,6 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
    Top IO requires [DTrace][Dtrace] and it would take a while to finish. The new **callback** design is to run the job in he background and post a notification (OSX 10.8+) using notification center. Click on the notification to show the result in alfred.
 
 ![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/callback.png) 
-
 
 
 
@@ -65,12 +76,16 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 1.) Type process name to filter
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/filtered%20by%20query.png)
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" width="400">
+</p>
+
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/top%20sleep.png) 
-
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep.png" height="400">
+</p>
 
 ### 2. Glance an Eye on your system
 
@@ -78,7 +93,9 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 1. `glance`: Show system information including internal battery, bluetooth battery, disk capacity, etc.
 
-![](https://raw.github.com/zhaocai/alfred2-top-workflow/master/screenshots/battery.png)
+<p align="center">
+   <img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" height="400">
+</p>
 
 #### B. Change Display Order
 
@@ -94,56 +111,12 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 Two ways are provided:
 
-1. You can download the [Top Processes.alfredworkflow](https://github.com/zhaocai/alfred2-top-workflow/raw/master/Top%20Processes.alfredworkflow) and import to Alfred 2. This method is suitable for **regular users**.
+1. You can download the latest release from [here](https://github.com/singhprd/system-monitor-alfred-workflow/releases) and import into to Alfred. This method is suitable for **regular users**.
 
 2. You can `git clone` or `fork` this repository and use `rake install` and `rake uninstall` to install. Check `rake -T` for available tasks.
 This method create a symlink to the alfred workflow directory: "~/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows". This method is suitable for **developers**.
 
 
-## Troubleshooting
+---
 
-### 1. Does not work in Mac OSX 10.9 (Maverick)
-
-In OSX 10.9, the system ruby is upgraded to 2.0.0. You need to download the new version of this workflow which packs the ruby gems for 2.0.0 inside.
-
-If the downloaded version does not work, try 
-
-1.) open `Terminal.app`. If you use rvm or rbenv, switch to the system ruby.
-2. run `cd "$HOME/Library/Application Support/Alfred 2/Alfred.alfredpreferences/workflows/me.zhaowu.top" && rake bundle:update`
-
-
-### 2. iotop causes mouse lagging
-
-This issue is not caused by this workflow but by [DTrace][DTrace]. The related system log message is `IOHIDSystem cursor update overdue. Resending.`.
-In my Macbook Pro, any [DTrace][DTrace] based program will introduce this issue including the mac built-in `/usr/bin/iotop`, and `/Applications/Xcode.app/Contents/Applications/Instruments.app` .
-
-I upgrade to OS X 10.9 and this issue is resolved.
-
-### 3. Encoding::CompatibilityError: incompatible character encodings: ASCII-8BIT and UTF-8
-
-Add the following contents to `/etc/launchd.conf`. Restart is required.
-```sh
-setenv LANG en_US.UTF-8
-setenv LC_ALL en_US.UTF-8
-```
-
-
-## Copyright
-
-Copyright (c) 2013 Zhao Cai <caizhaoff@gmail.com>
-
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-[DTrace]: https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/dtrace.1.html
+### Forked from Zhao Cai at https://github.com/zhaocai/alfred2--workflow
