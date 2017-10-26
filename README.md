@@ -64,11 +64,11 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 1.) Type process name to filter
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" height="300">
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/filtered%20by%20query.png" width="400">
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/stop_sleep.png" height="300">
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/top_sleep.png" height="300">
 
 ### 2. Glance an Eye on your system
 
