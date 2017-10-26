@@ -68,7 +68,7 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 ##### 2.) To search for process state, use **:idle**, **:sleep**, **:stopped**, **:zombie**, **:uninterruptible**, **:runnable**, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/glance.png" height="300">
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/stop_sleep.png" height="300">
 
 ### 2. Glance an Eye on your system
 
@@ -76,7 +76,7 @@ Just type `-?`, `-h`, or `--help` after the keyword to show help.
 
 1. `glance`: Show system information including internal battery, bluetooth battery, disk capacity, etc.
 
-<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" width="100" height="100">
+<img src="https://github.com/singhprd/alfred2-top-workflow/blob/master/screenshots/battery_2.png" height="300">
 #### B. Change Display Order
 
 1. Activate `Alfred Preferences` → `Advanced` → `Top Result Keyword Latching`
