@@ -1,7 +1,10 @@
-# System Monitor
-An Alfred 3 Workflow.
+# System Monitor : An Alfred 3 Workflow.
 
-#### Take a glance at system performance. List/Kill Top Processes by Memory, Cpu or IO Usage.
+### Take a glance at system performance. List/Kill Top Processes by Memory, Cpu or IO Usage.
+
+###### Forked from Zhao Cai as Alfred 2 Top Workflow at https://github.com/zhaocai/alfred2-top-workflow
+
+
 
 
 ### [💾 Download](https://github.com/singhprd/alfred2-top-workflow/releases/download/v2.3/Top.Processes.alfredworkflow) 
