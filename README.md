@@ -1,4 +1,8 @@
-# Alfred 2 Top Process Workflow
+# System Monitor
+An Alfred 3 Workflow.
+
+#### Take a glance at system performance. List/Kill Top Processes by Memory, Cpu or IO Usage.
+
 
 ### [💾 Download](https://github.com/singhprd/alfred2-top-workflow/releases/download/v2.3/Top.Processes.alfredworkflow) 
 
