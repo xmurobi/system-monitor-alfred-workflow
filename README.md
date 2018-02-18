@@ -7,7 +7,7 @@
 
 
 
-### [💾 Download](https://github.com/singhprd/alfred2-top-workflow/releases/download/v2.3/Top.Processes.alfredworkflow) 
+### [💾 Download](https://github.com/singhprd/system-monitor-alfred-workflow/releases/download/1/System.Monitor.alfredworkflow) 
 
 - 1) List/Kill Top Processes by Memory/CPU/IO Usage
 
