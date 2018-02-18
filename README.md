@@ -119,5 +119,4 @@ This method create a symlink to the alfred workflow directory: "~/Library/Applic
 
 ---
 
-### Forked from Zhao Cai at https://github.com/zhaocai/alfred2-
--workflow
+### Forked from Zhao Cai at https://github.com/zhaocai/alfred2--workflow
