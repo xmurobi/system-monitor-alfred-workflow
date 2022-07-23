@@ -9,15 +9,50 @@ require "alfred"
 require 'plist'
 require 'yaml'
 require 'mixlib/shellout'
-require 'iStats'
+
+
+    # // Apple Silicon
+    
+    # Sensor(key: "Tg05", name: "GPU 1", group: .GPU, type: .temperature, average: true),
+    # Sensor(key: "Tg0D", name: "GPU 2", group: .GPU, type: .temperature, average: true),
+    # Sensor(key: "Tg0L", name: "GPU 3", group: .GPU, type: .temperature, average: true),
+    # Sensor(key: "Tg0T", name: "GPU 4", group: .GPU, type: .temperature, average: true),
+    
+    # Sensor(key: "TaLP", name: "Airflow left", group: .sensor, type: .temperature),
+    # Sensor(key: "TaRF", name: "Airflow right", group: .sensor, type: .temperature),
+    
+    # Sensor(key: "TH0x", name: "NAND", group: .system, type: .temperature),
+    # Sensor(key: "TB1T", name: "Battery 1", group: .system, type: .temperature),
+    # Sensor(key: "TB2T", name: "Battery 2", group: .system, type: .temperature),
+    # Sensor(key: "TW0P", name: "Airport", group: .system, type: .temperature),
 
 class Glance
   SMC_KEYS = {
-    'TC0P' => 'cpu_temperature',
-    'TG0P' => 'gpu_temperature',
+    'TC10' => 'cpu_temperature',
+    'TD00' => 'gpu_temperature',
     'F0Ac' => 'fan0_speed',
     'F1Ac' => 'fan1_speed',
   }
+
+  # Apple Silicon
+  # Sensor(key: "Tp09", name: "CPU efficiency core 1", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0T", name: "CPU efficiency core 2", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp01", name: "CPU performance core 1", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp05", name: "CPU performance core 2", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0D", name: "CPU performance core 3", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0H", name: "CPU performance core 4", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0L", name: "CPU performance core 5", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0P", name: "CPU performance core 6", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0X", name: "CPU performance core 7", group: .CPU, type: .temperature, average: true),
+  # Sensor(key: "Tp0b", name: "CPU performance core 8", group: .CPU, type: .temperature, average: true),
+  CPU_KEYS = ['Tp09','Tp0T','Tp01','Tp05','Tp0D','Tp0H','Tp0L','Tp0P','Tp0X','Tp0b']; 
+  # Sensor(key: "Tg05", name: "GPU 1", group: .GPU, type: .temperature, average: true),
+  # Sensor(key: "Tg0D", name: "GPU 2", group: .GPU, type: .temperature, average: true),
+  # Sensor(key: "Tg0L", name: "GPU 3", group: .GPU, type: .temperature, average: true),
+  # Sensor(key: "Tg0T", name: "GPU 4", group: .GPU, type: .temperature, average: true),
+  GPU_KEYS = ['Tg05','Tg0D','Tg0L','Tg0T'];
+  FAN_KEYS = ['F1Ac','F0Ac'];
+
 
   def self.sh(command, opts = {})
     shell = Mixlib::ShellOut.new(command)
@@ -44,8 +79,8 @@ class Glance
 
 
   def collect
-    collect_battery
     collect_temperature
+    collect_battery
     collect_bluetooth
     collect_storage
   end
@@ -54,36 +89,64 @@ class Glance
   def collect_temperature
     return if @actor
 
-    # temp = IStats::Cpu.delegate("all")
+    cpu_profiler = {}
+    gpu_profiler = {}
+    fan_profiler = {}
 
-#     > IStats.get_info[:cpu_temperature]
-# => {:battery_health_stats=>{:battery_health=>"Good", :max_design_cycle_count=>1000, :cycle_count=>"156", :cycle_count_percentage=>15.6, :thresholds=>[450.0, 650.0, 850.0, 950.0], :battery_temp=>31.796875}, :battery_charge_stats=>{:cur_charge=>"3630", :cur_charge_percentage=>64, :original_max_capacity=>6559.0, :current_max_capacity=>5932.0}, :cpu_temperature=>43.5, :cpu_thresholds=>[50, 68, 80, 90], :fan_numbers_and_speeds=>[[1, 0]]}
+    profilers = %x{./bin/smc -k #{(CPU_KEYS+GPU_KEYS+FAN_KEYS).join(',')} -r -o}.split("\n")
 
-    cpu_temperature = IStats.get_info[:cpu_temperature]
-    icon = {:type => "default", :name => "icon/temperature/GPU.png"}
+    profilers.each do |pf|
+      items = pf.split
+      value = items[1].to_f
+      
+      if CPU_KEYS.include? items[0] and value > 0
+        cpu_profiler[items[0]] = value.to_f.round(2)
+      end
+
+      if GPU_KEYS.include? items[0] and value > 0
+        gpu_profiler[items[0]] = value.to_f.round(2)
+      end
+
+      if FAN_KEYS.include? items[0]
+        fan_profiler[items[0]] = value.to_i
+      end
+    end
+
+    # CPU
+    cpu_temperature = (cpu_profiler.values().sum().to_f / cpu_profiler.length()).round(2)
+    icon = {:type => "default", :name => "icon/process/cpu.png"}
     @feedback.add_item(
-      :subtitle => "CPU: #{cpu_temperature}° C" ,
-      :title    => "CPU Temperature"                                     ,
-      :uid      => "CPU Temperature"                                     ,
+      :subtitle => "Cores: #{cpu_profiler.values().join(' | ')}° C",
+      :title    => "CPU Temperature: #{cpu_temperature}° C",
+      :uid      => "CPU Temperature",
       :icon     => icon)
 
-    # gpu_temperature = 200
-    # icon = {:type => "default", :name => "icon/temperature/GPU.png"}
-    # @feedback.add_item(
-    #   :subtitle => "GPU: #{gpu_temperature}° C" ,
-    #   :title    => "GPU Temperature"                                     ,
-    #   :uid      => "GPU Temperature"                                     ,
-    #   :icon     => icon)
+    # GPU
+    gpu_temperature = (gpu_profiler.values().sum().to_f / gpu_profiler.length()).round(2)
+    icon = {:type => "default", :name => "icon/temperature/GPU.png"}
+    @feedback.add_item(
+      :subtitle => "Cores: #{gpu_profiler.values().join(' | ')}° C" ,
+      :title    => "GPU Avg Temperature: #{gpu_temperature}° C"                                     ,
+      :uid      => "GPU Temperature"                                     ,
+      :icon     => icon)
 
-    # [number, speed]
-    IStats.get_info[:fan_numbers_and_speeds].each{|info_arr|
-      add_fan_speed_item(info_arr)
-    }
+
+    right_fan_speed = fan_profiler['F1Ac'].to_i
+    left_fan_speed  = fan_profiler['F0Ac'].to_i
+    add_fan_speed_item(left_fan_speed, right_fan_speed)
   end
 
-  def add_fan_speed_item(info_arr)
-    fan_number = info_arr[0]
-    fan_speed = info_arr[1]
+  def add_fan_speed_item(left, right)
+    if left and right
+      fan_speed = (left + right) / 2
+    elsif left.nil?
+      fan_speed = right
+    elsif right.nil?
+      fan_speed = left
+    else
+      return
+    end
+
     if fan_speed < 3500
       icon = {:type => "default", :name => "icon/fan/green.png"}
       title = "Fan Speed: Normal"
@@ -95,9 +158,9 @@ class Glance
       title = "Fan Speed: Driving Crazy!"
     end
     @feedback.add_item(
-      :subtitle => "Fan #{fan_number}: #{fan_speed} RPM" ,
-      :uid      => "Fan #{fan_number} Speed",
-      :title    => title,
+      :subtitle => "Left #{left} ↔ Right #{right} RPM" ,
+      :uid      => 'Fan Speed'                                             ,
+      :title    => title                                                   ,
       :icon     => icon)
 
   end
@@ -152,33 +215,33 @@ class Glance
   end
 
   def collect_battery
-    if @actor.eql? "battery"
-      show_detailed_feedback = true
-    else
-      if @actor
-        return
-      else
-        show_detailed_feedback = false
-      end
-    end
-
-
+    # if @actor.eql? "battery"
+    #   show_detailed_feedback = true
+    # else
+    #   if @actor
+    #     return
+    #   else
+    #     show_detailed_feedback = false
+    #   end
+    # end
+    show_detailed_feedback = true
+    
     devices = Plist.parse_xml %x{ioreg -l -n AppleSmartBattery -r -a}
     return if devices.nil? || devices.empty?
 
     devices.each do |device|
-      current_capacity = device["CurrentCapacity"]
-      max_capacity     = device["MaxCapacity"]
+      current_capacity = device['CurrentCapacity']
+      max_capacity     = device['MaxCapacity']
       design_capacity  = device['DesignCapacity']
       temperature      = device['Temperature'].to_f / 100
       is_charging      = device['IsCharging']
-      serial           = device['BatterySerialNumber']
+      serial           = device['Serial']
       cycle_count      = device['CycleCount']
       fully_charged    = device['FullyCharged']
       is_external      = device['ExternalConnected']
       time_to_full     = device['AvgTimeToFull']
       time_to_empty    = device['AvgTimeToEmpty']
-      manufacture_date = device['ManufactureDate']
+      manufacture_date = device['BatteryData']['ManufactureDate']
 
 
       day = manufacture_date & 31
@@ -255,8 +318,8 @@ class Glance
           :icon => {:type => "default", :name => "icon/battery/clock.png"}
         )
         @feedback.add_item(
-          :title => "#{temperature}° C",
-          :subtitle => 'Temperature',
+          :title => "Battery Temperature: #{temperature}° C",
+          # :subtitle => 'Temperature',
           :icon => {:type => "default", :name => "icon/battery/temp.png"}
         )
         @feedback.add_item(
